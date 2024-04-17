@@ -1,0 +1,101 @@
+import os
+
+import random
+
+numero = random.randint(0, 9)
+
+lista = ['cadeira',
+        'perfume',
+        'estojo',
+        'celular',
+        'ventilador',
+        'caderno',
+        'mochila',
+        'album',
+        'grampeador',
+        'estatua']
+
+palavra_secreta = lista[numero]
+
+letras_acertadas = ''
+
+letras_tentadas = []
+
+tentativas = 0
+
+vida = 5
+
+cont = 0
+
+contador = 0
+
+while True:
+    print(f'Vida: {vida}')
+    print('Voce digitou essas letras:', *letras_tentadas, sep=' - ')
+
+    tentativas += 1
+
+    letra_digitada = input('Digite uma letra: ')
+
+    if letra_digitada in letras_tentadas:
+        print('Essa letra já foi!')
+        continue
+
+    letras_tentadas += letra_digitada
+
+    if letra_digitada in letras_acertadas:
+        continue
+
+    if len(letra_digitada) > 1:
+        print('Digite apenas uma letra')
+        continue
+
+    if letra_digitada.isdigit():
+        print('Digite apenas letras!')
+        continue
+    
+    if letra_digitada in palavra_secreta:
+        letras_acertadas += letra_digitada
+        cont += 1
+
+    else:
+        cont = 0
+
+    palavra_formada =  ''
+
+    for letra_secreta in palavra_secreta:
+
+        if letra_secreta in letras_acertadas:
+            palavra_formada += letra_secreta
+
+        else:
+            palavra_formada += '*'
+            
+    if cont == 0:
+        vida -= 1
+
+
+    if cont == 2:
+        print('Voce ganhou uma vida!')
+        vida += 1
+        cont = 0
+
+    if vida == 0:
+        print('Voce perdeu!')
+        break
+            
+    print(palavra_formada)
+
+    if palavra_formada == palavra_secreta:
+        contador = 1
+        break
+
+os.system('cls')
+
+if contador == 1:
+    print('VOCÊ GANHOU! \nPARABENS!')
+
+print(f'A palavra é: {palavra_secreta}!')
+print(f'Voce fez: {tentativas} tentativas!')
+print(f'Voce terminou com {vida} vidas!')
+print('Voce digitou essas letras:', *letras_tentadas, sep=' - ')
